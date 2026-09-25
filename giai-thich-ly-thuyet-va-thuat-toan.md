@@ -1,19 +1,11 @@
 # Hiểu kế hoạch phát hiện bất thường tài nguyên: mục đích, lý thuyết và thuật toán
 
-Ngày biên soạn: 2026-09-25. Đối chiếu với mã nguồn và `configs/shadow.json` hiện có trong dự án.
-
 **Mục đích của kế hoạch là phát hiện những thay đổi đáng chú ý trong cách một máy hoặc dịch vụ sử dụng tài nguyên, giải thích vì sao chúng đáng chú ý, rồi cung cấp bằng chứng để quyết định có cần xử lý hay không.**
 
 Ví dụ: một máy thường dùng 2% CPU bỗng dùng 40% trong nhiều phút. Máy chưa chạm ngưỡng 85%, nhưng hành vi đã thay đổi đáng kể. Ta muốn biết việc đó sớm để kiểm tra: có tăng traffic, chạy batch, deploy mới, hay xuất hiện vấn đề?
 
-Tài liệu này đi từ câu hỏi vận hành đến phép tính. Không cần chạy chương trình hoặc mở dashboard để đọc. Các ví dụ số là dữ liệu minh họa, trừ phần ghi rõ kết quả từ bộ demo của dự án.
-
-Hiện tại, dự án có bản MVP — phiên bản đầu đủ để kiểm chứng cách làm — chạy trên dữ liệu mô phỏng. Thanos `http://172.21.152.160:30909` chưa truy cập được theo lần kiểm tra và xác nhận trước đó. Chưa có kết quả trên workload thật hoặc thông báo production. Dashboard thử nghiệm đã được dừng theo yêu cầu.
 
 ## Cách đọc
-
-Nếu đang thấy rối, hãy đọc theo hai lượt:
-
 - **Lượt đầu để hiểu mục đích:** mục 1, 3, 5, 8, 12 và 16. Trong đó, mục 8 giải thích trọn vẹn một cảnh báo CPU bằng số cụ thể.
 - **Lượt sau để hiểu thuật toán:** mục 4, 6, 7, 9, 10, 11 và 13. Sau đó đọc mục 14–18 để biết cách đánh giá, áp dụng và giới hạn.
 
